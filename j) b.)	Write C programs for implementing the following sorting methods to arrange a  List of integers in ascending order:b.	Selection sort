@@ -1,0 +1,28 @@
+#include<stdio.h>
+void selsort(int ar[],int n)
+ { for(int i=0;i<n;i++)
+ {   int small=ar[i];
+     int p=i;
+    for(int j=i;j<n;j++)
+    {   if(small>ar[j])
+        {   small=ar[j];
+            p=j;   }}
+    int t =ar[p];
+    ar[p]=ar[i];
+    ar[i]=t;       }}
+int main()
+{
+    int n ;
+    printf("enter size of array");
+    scanf("%d",&n);
+    int ar[n];
+    printf("enter array");
+    for(int i=0;i<n;i++)
+        scanf("%d",&ar[i]);
+        selsort(ar,n);
+         printf("the sorted array is");
+   for(int i=0;i<n;i++)
+   {
+        print("%d",ar[i]);
+        return 0;
+        }
