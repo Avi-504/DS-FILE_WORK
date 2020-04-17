@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct node{
+    int data;
+    struct node* prev;
+    struct node* next;
+}node;
+node* head;
+void inst_at_begining()
+{
+    node* temp=(node*)malloc(sizeof(node));
+    temp->prev=NULL;
+    temp->next=head;
+    // head->prev=temp;
+    printf ("Enter data to insert\n");
+    int data;
+    scanf ("%d",&data);
+    temp->data=data;
+    head=temp;
+}
+void inst_at_end()
+{
+    node* temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=(node *)malloc(sizeof(node));
+    temp->next->prev=temp;
+    temp->next->next=NULL;
+    printf ("Enter data to insert\n");
+    int data;
+    scanf ("%d",&data);
+    temp->next->data=data;
+}
+void inst_in_between()
+{
+    node* temp=head;
+    printf ("Enter data after which you want to insert\n");
+    int data;
+    scanf ("%d",&data);
+    while(temp->data!=data)
+    {
+        temp=temp->next;
+    }
+    node* new=(node *)malloc(sizeof(node));
+    new->prev=temp;
+    new->next=temp->next;
+    temp->next=new;
+    printf ("Enter data to insert\n");
+    scanf ("%d",&data);
+    new->data=data;
+}
+void del_at_begining()
+{
+    node*temp=head;
+    head=head->next;
+    free(temp);
+}
+void del_at_end()
+{
+    node*temp=head;
+    while(temp->next->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    free(temp->next);    
+    temp->next=NULL;
+}
+void del_in_between()
+{
+    node* temp=head;
+    node* temp2;
+    printf ("Enter data after which you want to delete\n");
+    int data;
+    scanf ("%d",&data);
+    while(temp->data!=data)
+    {
+        temp=temp->next;
+    }
+    temp->next->next->prev=temp;
+    temp2=temp->next;
+    free(temp2);
+    temp->next=temp->next->next;
+}
+void print()
+{
+    node* temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d  ",temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+int main()
+{
+    node* head=NULL;
+    printf ("Enter size");
+    int n;
+    scanf ("%d",&n);
+    inst_at_begining();
+    for (int i=0;i<n-1;i++)
+    inst_at_end();
+    inst_in_between();
+    //del_at_begining();
+    //del_at_end( );
+    del_in_between();
+    print();
+}
