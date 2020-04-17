@@ -1,0 +1,141 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<string.h>
+/** BY AVI**/
+struct st
+{
+	int top;
+	char *data;
+
+}stack;
+
+void create(int n)
+{
+	stack.top=-1;
+	stack.data=(char*)malloc(n*sizeof(char));
+}
+void push(char x)
+{
+	stack.data[++stack.top]=x;
+}
+
+char pop()
+{
+	char y=stack.data[stack.top--];
+	return y;
+}
+
+int outprefix(char x)
+{
+	if(x=='+'||x=='-')
+		return 1;
+	if(x=='*'||x=='/')
+		return 3;
+	if(x=='^')
+		return 6;
+	if(x=='(')
+		return 7;
+	if(x==')')
+		return 0;
+	return -1;
+}
+
+int inprefix(char x)
+{
+	if(x=='+'||x=='-')
+		return 2;
+	if(x=='*'||x=='/')
+		return 4;
+	if(x=='^')
+		return 5;
+	if(x=='(')
+		return 0;
+	return -1;
+}
+
+void evalpostfix(char x)
+{
+	int t;
+	int x1,x2,res;
+	if(x=='+'||x=='-'||x=='*'||x=='/'||x=='^')
+	{
+		x1=pop();
+		x2=pop();
+		switch(x)
+		{
+			case'+':res=(x2-48)+(x1-48);
+					break;
+			case'-':res=(x2-48)-(x1-48);		
+					break;
+			case'*':res=(x2-48)*(x1-48);	
+					break;
+			case'/':res=(x2-48)/(x1-48);
+					break;
+			case'^':res=pow((x2-48),(x1-48));
+					break;
+		}
+		push(res+48);
+	}
+	else
+		{
+			push(x);
+		}
+
+}
+int main()
+{
+	int q;
+
+	
+	int i=0;
+	int k=0;
+	char infixexp[100],postfixexp[100];
+	printf("Enter the infix expresion\n");
+	scanf("%s",&infixexp);
+	strcat(infixexp,")");
+	create(strlen(infixexp));
+	push('(');
+	while(infixexp[i]!='\0')
+	{
+		char x=infixexp[i];
+		if(x=='+'||x=='-'||x=='*'||x=='/'||x=='^'||x=='('||x==')')
+		{
+			if(outprefix(x)>inprefix(stack.data[stack.top])&&outprefix(x!=0))
+			push(infixexp[i++]);
+			else
+			{
+				if(outprefix(infixexp[i])==0)
+				{
+					while(inprefix(stack.data[stack.top])!=0)
+					{
+						postfixexp[k++]=pop();
+					}
+					pop();
+					i++;
+				}
+				else
+				{
+					while(outprefix(infixexp[i])<inprefix(stack.data[stack.top]))
+						postfixexp[k++]=pop();
+					push(infixexp[i++]);
+				}
+			}
+		}
+		else
+			postfixexp[k++]=infixexp[i++];
+		
+	}
+	postfixexp[k]='\0';
+	printf("expresion in postfix form is\n");
+	for (int j = 0; j<k; ++j)
+	{
+		printf("%c",postfixexp[j]);
+	}
+
+	for(int x=0;x<k;x++)
+	{
+		evalpostfix(postfixexp[x]);	
+	}
+	return 0;
+}
