@@ -1,0 +1,140 @@
+  
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int data;
+	struct node *next;
+	struct node *prv;
+
+}*front=NULL,*rear=NULL;
+
+void enqueuef()
+{
+	printf("Enter data to enqueue from front\n");
+	if(front==NULL)
+	{
+		front=(struct node *)malloc(sizeof(struct node));
+		scanf("%d",&front->data);
+		front->next=front->prv=NULL;
+		rear=front;
+	}
+	else
+	{
+		struct node *tmp;
+		tmp=(struct node *)malloc(sizeof(struct node));
+		scanf("%d",&t->data);
+		tmp->prv=NULL;
+		tmp->next=front;
+		front->prv=tmp;
+		front=tmp;
+	}
+	
+}
+void enqueuer()
+{
+	printf("Enter data to enqueue from rear\n");
+		if(rear==NULL)
+		{
+			rear=(struct node *)malloc(sizeof(struct node));
+			scanf("%d",&rear->data);
+			rear->next=rear->prv=NULL;
+			front=rear;
+		}
+	
+	else
+	{
+		struct node *tmp;
+		tmp=(struct node *)malloc(sizeof(struct node));
+		scanf("%d",&t->data);
+		rear->next=tmp;
+		tmp->prv=rear;
+		tmp->next=NULL;
+		rear=tmp;
+	}
+
+}
+void dequeuef()
+{
+	if(front==NULL)
+	{
+		rear=NULL;
+		printf("Queue is Empty\n");
+	}
+	else
+	{
+		struct node *tmp=front;
+		if(front->data==rear->data)
+		{
+			front=rear=NULL;
+		}
+		else
+			front=front->next;
+		int x=tmp->data;
+		free(tmp);
+		printf("%d is deleted\n",x);
+
+				
+	}
+}
+void dequeuer()
+{
+	if(rear==NULL)
+	{
+		front=NULL;
+		printf("Queue is Empty\n");
+	}
+	else
+	{
+		struct node *tmp=rear;
+		if(front->data==rear->data)
+		{
+			front=rear=NULL;
+		}
+		else
+		rear=rear->prv;
+		int x=tmp->data;
+		free(tmp);
+		printf("%d is deleted\n",x);		
+	}
+}
+
+void display(struct node *p)
+{
+	printf("The linked list is\n");
+	while(p!=NULL)
+	{
+		printf("%d ",p->data);
+		p=p->next;
+	}
+	printf("\n");
+
+}
+
+int main()
+{
+	int n;
+	printf("Enter 1 for enqueue from front\nEnter 2 for enqueue from rear\nEnter 3 for dequeue from front\nEnter 4 for dequeue from rear\nEnter 5 for displaying the queue\nAny other key for exit\n");
+
+	
+	while(1)
+	{
+		scanf("%d",&n);
+		switch(n)
+		{
+			case 1:enqueuef();
+			break;
+			case 2:enqueuer();
+			break;
+			case 3:dequeuef();
+			break;
+			case 4:dequeuer();
+			break;
+			case 5:display(front);
+			break;
+			default:exit(0);
+		}
+	}
+	return 0;
+}
