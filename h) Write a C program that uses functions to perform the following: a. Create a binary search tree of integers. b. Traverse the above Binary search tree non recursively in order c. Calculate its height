@@ -1,0 +1,160 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+/**BY AVI**/
+struct node
+{
+	int datas;
+	struct node *r;
+	struct node *l;
+}*root=NULL;
+
+struct nodes
+{
+	struct node *data;
+	struct nodestak *next;
+}*top=NULL;
+
+
+void push(struct node *x)
+{
+	struct nodestak *temp;
+	temp=(struct nodes *)malloc(sizeof(struct nodes));
+	temp->data=x;
+	temp->next=top;
+	top=temp;
+}
+
+struct node  *pop()
+{
+	struct nodestak *temp;
+	temp=top;
+	struct node *x=temp->data;
+	top=top->next;
+	free(temp);
+	return x;
+}
+
+int stop1()
+{
+	if(top==NULL)
+		return 1000000;
+	else
+		return top->data->datas;
+
+}
+int height(struct node *p)
+{
+	int x,y;
+	if(p==NULL)
+		return 0;
+	if(p->r==NULL&&p->l==NULL)
+		return 0;
+	x=height(p->l);
+	y=height(p->r);
+	return x>y?x+1:y+1;
+}
+
+struct snode
+{
+	struct node *tdata;
+	struct snode *link;
+}*tops=NULL;
+
+
+void pushs(struct node *p)
+{
+	struct snode *t;
+	t=(struct snode*)malloc(sizeof(struct snode));
+	t->tdata=p;
+	t->link=tops;
+	tops=t;
+}
+
+struct node *pops()
+{
+	struct stnode *t=tops;
+	struct node *p=tops->tdata;
+	tops=tops->link;
+	free(t);
+	return p;
+}
+
+int isempty()
+{
+	if(tops==NULL)
+		return 1;
+	else
+		return 0;
+}
+
+void inorder(struct node *p)
+{
+	while(p!=NULL||!isempty())
+	{
+		if(p!=NULL)
+		{
+			pushs(p);
+			p=p->l;
+		}
+		else
+		{
+			p=pops();
+			printf("%d ",p->datas);
+			p=p->r;
+		}
+	}
+}
+
+int main()
+{
+	printf("Enter the no. of node you want  to enter in binary search tree\n");
+	int n;
+	int i=0;
+	scanf("%d",&n);
+	int A[n];
+	printf("Enter the elements of binary search tree in preorder\n");
+	for(;i<n;i++)
+	{
+		scanf("%d",&A[i]);
+	}
+	i=0;
+	root=(struct node *)malloc(sizeof(struct node));
+	root->datas=A[i++];
+	root->r=root->l=NULL;
+	struct node *p=root;
+	
+	while(i<n)
+	{
+		if(A[i]<p->datas)
+		{
+			struct node *t;
+			t=(struct node *)malloc(sizeof(struct node));
+			t->datas=A[i++];
+			t->r=t->l=NULL;
+			p->l=t;
+			push(p);
+			p=t;
+		}
+		else
+		{
+			if(A[i]>p->datas&&A[i]<stop1())
+			{
+				struct node *t;
+				t=(struct node *)malloc(sizeof(struct node));
+				t->datas=A[i++];
+				t->r=t->l=NULL;
+				p->r=t;
+				p=t;
+			}
+			else
+				p=pop();
+		}
+	}
+	printf("\nHeight of tree is\n");
+	printf("%d",height(root));
+	printf("\nInorder traversal of tree is\n");
+	inorder(root);
+
+	return 0;
+}
