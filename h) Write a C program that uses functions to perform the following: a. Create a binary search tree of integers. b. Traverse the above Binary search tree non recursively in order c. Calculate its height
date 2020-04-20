@@ -18,7 +18,7 @@ struct nodes
 
 void push(struct node *x)
 {
-	struct nodestak *temp;
+	struct nodes *temp;
 	temp=(struct nodes *)malloc(sizeof(struct nodes));
 	temp->data=x;
 	temp->next=top;
