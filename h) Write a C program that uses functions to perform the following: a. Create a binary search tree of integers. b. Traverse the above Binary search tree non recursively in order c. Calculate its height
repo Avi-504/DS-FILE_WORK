@@ -12,7 +12,7 @@ struct node
 struct nodes
 {
 	struct node *data;
-	struct nodestak *next;
+	struct nodes *next;
 }*top=NULL;
 
 
@@ -27,7 +27,7 @@ void push(struct node *x)
 
 struct node  *pop()
 {
-	struct nodestak *temp;
+	struct nodes *temp;
 	temp=top;
 	struct node *x=temp->data;
 	top=top->next;
