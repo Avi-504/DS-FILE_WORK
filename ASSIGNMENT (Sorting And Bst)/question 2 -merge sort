@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+/* 
+		CODED BY AVI
+  	_    _     _  ___
+   /^\	 \\   //  | |
+  / _ \   \\_//   | |
+ /_/ \_\   \_/    |_|
+
+
+
+		THIS PEICE OF CODE BELONGS ONLY TO ME,
+		CRACKERS BEWARE!!!!
+		 😡 😡 😡 😡 😡
+*/
+
+void merge(int arr[],int s,int m,int e)//	this merges the sorted arrays together
+ {	
+	int n1=m-s+2;
+	int n2=e-m+1;
+	int l[n1];
+	int r[n2];
+	for(int i=0;i<=n1-2;i++)//  Copying left elements into left array
+	{
+		l[i]=arr[s+i];
+	}
+	l[n1-1]=1000000;// setting last element of left array to a big number(∞)
+	
+	for(int q=0;q<=n2-2;q++)// Copying right elements into right array
+	{
+		r[q]=arr[m+1+q];
+	}
+	r[n2-1]=1000000;// setting last element of right array to a big number(∞)
+	int w=0,y=0;
+	for(int k=s;k<=e;k++)// comparing elements of left and right array
+	{
+		if(l[w]<=r[y])
+		{
+			arr[k]=l[w];// updating the original array 
+			w++;// incrementing index of left array if left element is smaller than right element 
+		}
+		else
+		{
+			arr[k]=r[y];// updating the original array
+			y++;// incrementing index of right array if right element is smaller than left  element
+		}
+	}
+}	
+void mergesort(int arr[],int s, int e)// this finds the middle point about which two arrays to be created and sorted
+{
+	if(s<e)
+	{
+		int m=(s+e-1)/2;// finding middle index
+		mergesort(arr,s,m);// dividing into left 
+		mergesort(arr,m+1,e);// dividing into right
+		merge(arr,s,m,e);// merging the two arrays
+	}
+}
+void delay()
+{
+	
+   int c, d;
+   
+   for (c = 1; c <= 32767; c++)
+       for (d = 1; d <= 7276; d++)
+       {}
+       
+   //just added this to make it look more techy
+
+}
+int main()
+{
+	int n;
+	printf("ENTER THE SIZE OF ARRAY\n");
+	scanf("%d",&n);
+	int arr[n];
+	for (int i=0;i<n;i++)
+	{
+		printf("ENTER ELEMENT\n");
+		scanf("%d",&arr[i]);
+	}
+	int s=0,e=n-1;
+	mergesort(arr,s,e);
+	printf("SORTING STARTS IN \n");
+	printf("3 ");delay();
+	printf("2 ");delay();
+	printf("1 \n");delay();
+	printf("SORTING YOUR ARRAY\n");delay();
+	printf("SORTING COMPLETE\n");delay();
+	printf("YOUR SORTED ARRAY IS\n");delay();
+	for(int j=0;j<n;j++)
+	{
+			printf("%d ",arr[j]);
+	}
+return 0;
+}
